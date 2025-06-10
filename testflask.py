@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template
+from flask import request
 app = Flask(__name__)
-
 
 @app.route("/")
 def hello_world():
@@ -284,3 +284,71 @@ def nurses():
   for x in myresult:
     print(x)
   return (x)
+@app.route ("/list/cars")
+def list():
+   mydb = mysql.connector.connect(
+host="localhost",
+user="root",
+password="",
+database="nursesheduledb")
+   
+   print(mydb)
+   mycursor = mydb.cursor()
+   mycursor.execute("SELECT staff.id, staff.fullnames, dutyroster.Shift_number FROM staff INNER JOIN dutyroster ON staff.id=dutyroster.id;")
+   cars=["Ford", "Volvo", "BMW"]
+   myresult = mycursor.fetchall()
+
+   
+  # results=mycursor
+   y=len(cars)
+   print (y)
+   for x in cars:
+    print (x)
+  
+
+   
+
+#mycursor.execute("SHOW DATABASES")
+
+#for x in mycursor:
+ # print(x)
+
+  
+ 
+#cars[0]="marcedes"
+ # x = cars[0]
+#print(cars[0])
+ # cars.pop(2)
+#print(cars[0])
+ # cars.remove("Volvo")
+ 
+    return render_template('list.html', cars=cars,results=myresult,name="mwebi")
+   
+@app.route("/list/form", methods=['GET'])
+def  formaddstaff():
+   print ("adding a record")
+   fullname=""
+   dateofbirth=""
+   specialty=""
+  # fullname= request.form['fullname']
+   #dateofbirth=request.form("fullname")
+   #specialty=request.form("fullnmaes")
+   #print(fullname)
+   return render_template('addrecord.html')
+  
+   #INSERT INTO `dutyroster`(`id`, `Shift_number`, `Staff_id`, `shift-id`, `Comments`, `Created_At`, `Updated_At`) VALUES( 4,'shift3
+#','4','2',' move bed 4 to ward 3 ','','');
+
+@app.route("/list/add", methods=['POST'])
+def addstaff():
+   print ("adding a record")
+   fullname=""
+   dateofbirth=""
+   specialty=""
+   fullname= request.form['fullname']
+   #dateofbirth=request.form("fullname")
+   #specialty=request.form("fullnmaes")
+   print(fullname)
+   return fullname
+   #return render_template('addrecord.html')
+

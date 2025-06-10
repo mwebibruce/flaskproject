@@ -1,0 +1,30 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+ <h1>Hello {{ name }}!</h1>
+ {% for car in cars %}
+        <h1>{{ car }}</h1>
+       
+  {% endfor %}
+  <table>
+    <tr>
+    <TH>ID</TH><TH>NAME</TH>
+    <td>shift</td>
+  </tr>
+   {% for result in results %}
+   <TR>    
+   <TD>{{ result[0] }}</TD>
+    <TD>{{ result[1] }}</TD>
+    <TD>{{ result[2] }}</TD>
+    </TR>
+  {% endfor %}
+  </table>
+</body>
+</html> 
+
