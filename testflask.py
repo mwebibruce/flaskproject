@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+#from flask import redirect
 app = Flask(__name__)
 
 @app.route("/")
@@ -351,4 +352,32 @@ def addstaff():
    print(fullname)
    return fullname
    #return render_template('addrecord.html')
+
+   from flask import url_for
+
+@app.route('/')
+def index():
+    return 'index'
+
+@app.route('/login')
+def login():
+    return 'login'
+
+@app.route('/user/<username>')
+def profile(username):
+    return f'{username}\'s profile'
+
+#from flask import Flask, redirect
+
+#app = Flask(__name__)
+
+#@app.route('/current_location')
+#def index():
+ #   return redirect('/new_location')
+
+#@app.route('/new_location')
+#def new_location():
+   # return 'You have been redirected!'
+    
+
 
