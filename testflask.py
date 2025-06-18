@@ -1,7 +1,12 @@
 from flask import Flask
 from flask import render_template
 from flask import request
-#from flask import redirect
+from dotenv import load_dotenv
+from flask import redirect
+
+load_dotenv()  # take environment variables
+
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -356,7 +361,7 @@ def addstaff():
    from flask import url_for
 
 @app.route('/')
-def index():
+def home2():
     return 'index'
 
 @app.route('/login')
@@ -371,13 +376,39 @@ def profile(username):
 
 #app = Flask(__name__)
 
-#@app.route('/current_location')
-#def index():
- #   return redirect('/new_location')
+@app.route('/current_location')
+def currentlocation():
+   # return redirect('/submit_data')
+  return render_template('addrecord.html')
+  
 
-#@app.route('/new_location')
-#def new_location():
-   # return 'You have been redirected!'
-    
+@app.route('/new_location')
+def new_location():
+    return 'You have been redirected from current to new!'
+
+@app.route('/submit_data', methods=['POST','GET'])
+def submit_data():
+    data = request.form['fullname']
+    print (data)
+    return redirect("/new_location")
+        # ...
+    # allow both GET and POST requests
+@app.route('/form-example', methods=['GET', 'POST'])
+def form_example():
+    # handle the POST request
+    if request.method == 'POST':
+        language = request.form.get('language')
+        framework = request.form.get('framework')
+        return '''
+                  <h1>The language value is: {}</h1>
+                  <h1>The framework value is: {}</h1>'''.format(language, framework)
+
+    # otherwise handle the GET request
+    return '''
+           <form method="POST">
+               <div><label>Language: <input type="text" name="language"></label></div>
+               <div><label>Framework: <input type="text" name="framework"></label></div>
+               <input type="submit" value="Submit">
+           </form>'''
 
 
