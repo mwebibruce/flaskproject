@@ -1,5 +1,31 @@
 # import main Flask class and request object
 from flask import Flask, request
+import mysql.connector
+#INSERT INTO `staff` (`id`, `fullnames`, `dateofbirth`, `specialty`) VALUES (NULL, 'Joyce Wairimu', '2025-05-09', 'othopidic ');
+#INSERT INTO `staff` (`id`, `fullnames`, `dateofbirth`, `specialty`) VALUES (NULL, 'Sandra gesare', '2025-05-14', 'oncology nursing
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="",
+  database="nursesheduledb"
+)
+print(mydb)
+mycursor = mydb.cursor()
+
+#mycursor.execute("SHOW DATABASES")
+
+#for x in mycursor:
+ # print(x)
+
+
+  #SELECT staff.id, staff.fullnames, dutyroster.Shift_number FROM staff INNER JOIN dutyroster ON staff.id=dutyroster.id WHERE staff.fullnames like '%a' OR dutyroster.ID=4; like 
+mycursor.execute(" SELECT staff.id, staff.fullnames, dutyroster.Shift_number FROM staff INNER JOIN dutyroster ON staff.id=dutyroster.id")
+#mycursor.execute("SELECT * FROM staff WHERE fullnames LIKE 'a%';")
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
 
 # create the Flask app
 app = Flask(__name__)
@@ -64,6 +90,27 @@ def json_example2():
            The Python version is: {}
            The item at index 0 in the example list is: {}
            The boolean value is: {}'''.format(language, framework, python_version, example, boolean_test)
+
+@app.route('/json/show/staff/1', methods=['GET'])
+def json_show_staff():
+    request_data = request.get_json()
+    mycursor.execute(" SELECT staff.id, staff.fullnames, dutyroster.Shift_number FROM staff INNER JOIN dutyroster ON staff.id=dutyroster.id")
+    #mycursor.execute("SELECT * FROM staff WHERE fullnames LIKE 'a%';")
+    # myresult = mycursor.fetchall()
+    data=''' byid:{}'''.format(id)
+    for x in myresult:
+        print(x)
+
+        id = request_data['id']
+        return ''' byid:{}'''.format(id)
+
+@app.route('/json/add/staff', methods=['POST'])
+def json_post_staff():
+    request_data = request.get_json()
+
+    fullnames = request_data['fullnames']
+    return ''' fullnames:{}'''.format(fullnames)
+
 
 if __name__ == '__main__':
     # run app in debug mode on port 5000
