@@ -3,12 +3,14 @@ from flask import render_template
 from flask import request
 from dotenv import load_dotenv
 from flask import redirect
+#from flask_restful import Resource, Api
+
 
 load_dotenv()  # take environment variables
 
 
 app = Flask(__name__)
-
+api = Api(app)
 @app.route("/")
 def hello_world():
     a="""   <!DOCTYPE html>
@@ -358,7 +360,10 @@ def addstaff():
    return fullname
    #return render_template('addrecord.html')
 
-   from flask import url_for
+   
+  
+
+
 
 @app.route('/')
 def home2():
@@ -412,5 +417,8 @@ def form_example():
            </form>''' 
            
 
+class HelloWorld(Resource):
+    def get(self):
+        return {'hello': 'world'}
 
-
+api.add_resource(HelloWorld, '/test')

@@ -97,12 +97,12 @@ def json_show_staff():
     mycursor.execute(" SELECT staff.id, staff.fullnames, dutyroster.Shift_number FROM staff INNER JOIN dutyroster ON staff.id=dutyroster.id")
     #mycursor.execute("SELECT * FROM staff WHERE fullnames LIKE 'a%';")
     # myresult = mycursor.fetchall()
-    data=''' byid:{}'''.format(id)
+   # data=''' byid:{}'''.format(id)
     for x in myresult:
         print(x)
 
         id = request_data['id']
-        return ''' byid:{}'''.format(id)
+    return ''' byid:{}'''.format(id)
 
 @app.route('/json/add/staff', methods=['POST'])
 def json_post_staff():
